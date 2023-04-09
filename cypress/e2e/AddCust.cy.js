@@ -9,8 +9,8 @@ describe('Add New Customer', () => {
     cy.contains("Add Customer").click();
 
     let name = "Jayanta" + Utils.getRandomNumber();
-    let lname="Mandal";
-    let fullname=name+" "+lname;
+    let lname = "Mandal";
+    let fullname = name + " " + lname;
 
     //Add Customer details
     cy.get('input[ng-model="fName"]').should("be.visible")
@@ -38,7 +38,7 @@ describe('Add New Customer', () => {
     cy.xpath(`//td[text()='${name}']`).should("be.visible")
 
 
-     //Open Customer Account
+    //Open Customer Account
     cy.contains("Home").click();
     cy.contains("Bank Manager Login").click();
     cy.contains("Open Account").click();
@@ -58,7 +58,7 @@ describe('Add New Customer', () => {
     cy.contains("Customer Login").click();
     cy.get("#userSelect").select(fullname);
     cy.contains("Login").click();
-    cy.get("#accountSelect").find("option").should("have.length",1);
+    cy.get("#accountSelect").find("option").should("have.length", 1);
 
     //Deposit amount
     cy.contains("Deposit").click();
@@ -66,17 +66,26 @@ describe('Add New Customer', () => {
     cy.get("button[type='submit']").dblclick();
     cy.xpath("//span[text()='Deposit Successful']").should("be.visible");
 
+    //Delete  the Customer
+    cy.contains("Home").click();
+    cy.contains("Bank Manager Login").click();
+    cy.contains("Customers").click();
 
+    cy.get("input[placeholder='Search Customer']").type(name);
 
+    cy.get("table.table tbody td button").then(($ele) => {
+      getText = $ele.text();
+      cy.log(getText);
+      if(getText==="Delete")
+      {
+        cy.log("Delete nutton,,,")
+        cy.wrap($ele).click()
 
+      }
+     
 
-
-
-
-
-
-
-
+    })
+    
 
   });
 });
