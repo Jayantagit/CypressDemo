@@ -3,15 +3,23 @@ import Utils from "../support/Utils";
 
 let getText;
 describe('Add New Customer', () => {
+  before('Setup',() => {
+    cy.restoreLocalStorage();
+
+  });
+  after('Teardown',() => {
+    cy.saveLocalStorage();
+  });
   it('Successfully adding a Customer', () => {
 
     cy.visit("https://www.way2automation.com/angularjs-protractor/banking/#/manager")
     cy.contains("Add Customer").click();
 
     let name = "Jayanta" + Utils.getRandomNumber();
+ 
     let lname = "Mandal";
     let fullname = name + " " + lname;
-
+    
     //Add Customer details
     cy.get('input[ng-model="fName"]').should("be.visible")
       .type(name);
@@ -41,7 +49,7 @@ describe('Add New Customer', () => {
     //Open Customer Account
     cy.contains("Home").click();
     cy.contains("Bank Manager Login").click();
-    cy.contains("Open Account").click();
+    cy.contains("Open Account").click(); 
 
     cy.get("#userSelect").select(fullname);
     cy.get("#currency").select("Dollar");
@@ -65,6 +73,11 @@ describe('Add New Customer', () => {
     cy.get("input[placeholder='amount']").type(2000);
     cy.get("button[type='submit']").dblclick();
     cy.xpath("//span[text()='Deposit Successful']").should("be.visible");
+    cy.xpath("(//div[@ng-hide='noAccount']/strong)[2]").invoke("text").then((balance)=>
+    {
+      cy.log(balance)
+      cy.setLocalStorage("Balance",balance)
+    })
 
     //Delete  the Customer
     cy.contains("Home").click();
@@ -72,6 +85,7 @@ describe('Add New Customer', () => {
     cy.contains("Customers").click();
 
     cy.get("input[placeholder='Search Customer']").type(name);
+    
 
     cy.get("table.table tbody td button").then(($ele) => {
       getText = $ele.text();
