@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "alert" :"npx cypress run --spec cypress/e2e/alerts.cy.js",
+    "dashboard":"npx cypress run --e2e  --record --key=c7f7f02c-eb67-4b89-8015-0b51ab2073e4"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +17,7 @@
   },
   "dependencies": {
     "cypress-downloadfile": "^1.2.3",
+    "cypress-parallel": "^0.12.0",
     "uuid": "^9.0.0"
   }
 }
