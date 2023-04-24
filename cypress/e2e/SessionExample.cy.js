@@ -1,3 +1,6 @@
+
+import HomePage from "../support/Pages/HomePage";
+
 describe('User Login', () => {
 
 
@@ -12,8 +15,10 @@ describe('User Login', () => {
     })
     it('Admin Menu Click', () => {
 
-        cy.contains("Admin").click();
-        cy.contains("System Users").should("be.visible");
+       // cy.contains("Admin").click();
+       // cy.contains("System Users").should("be.visible");
+        HomePage.clickOnAdminLink()
+
     });
 
     it('PIM Menu Click', () => {
